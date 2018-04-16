@@ -1,0 +1,50 @@
+version: '2.1'
+
+services:
+  node:
+    build: 
+     context: .
+     dockerfile: ./nodeJS/Dockerfile
+    container_name: nextepc-webui
+    networks:
+     - bridge-network
+    ports:
+     - "3000:3000"
+    depends_on:
+     - mongodb
+
+  mongodb:
+    build:
+     context: .
+     dockerfile: ./mongoDB/Dockerfile
+    container_name: nextepc-mongodb
+    ports:
+     - "27017:27017"
+    networks:
+     - bridge-network
+    volumes:
+     - ./mongodata:/data/db
+
+
+  vepc:
+    build:
+     context: .
+     dockerfile: ./vEPC/Dockerfile
+    container_name: nextepc-vepc
+    depends_on:
+     - mongodb
+     - node
+    cap_add:
+     - SYS_ADMIN
+    sysctls:
+     - net.ipv6.conf.all.disable_ipv6=0
+    networks:
+     - bridge-network
+    privileged: true
+    hostname: nextepc
+    command: ["/sbin/init"]
+
+networks:
+  bridge-network:
+   driver: bridge
+
