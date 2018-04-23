@@ -6,22 +6,18 @@ services:
      context: .
      dockerfile: ./nodeJS/Dockerfile
     container_name: nextepc-webui
-    networks:
-     - bridge-network
+    network_mode: host
     ports:
      - "3000:3000"
-    depends_on:
-     - mongodb
 
   mongodb:
     build:
      context: .
      dockerfile: ./mongoDB/Dockerfile
     container_name: nextepc-mongodb
+    network_mode: host
     ports:
      - "27017:27017"
-    networks:
-     - bridge-network
     volumes:
      - ./mongodata:/data/db
 
@@ -32,19 +28,20 @@ services:
      dockerfile: ./vEPC/Dockerfile
     container_name: nextepc-vepc
     depends_on:
-     - mongodb
      - node
+    ports:
+     - "27017:27017"
     cap_add:
      - SYS_ADMIN
+     - NET_ADMIN
+    network_mode: host
     sysctls:
      - net.ipv6.conf.all.disable_ipv6=0
-    networks:
-     - bridge-network
+    devices:
+     - "/dev/net/tun:/dev/net/tun"
     privileged: true
     hostname: nextepc
-    command: ["/sbin/init"]
-
-networks:
-  bridge-network:
-   driver: bridge
+    volumes:
+     - ./mongodata:/data/db
+    command: /bin/bash -c "chmod 666 /dev/net/tun"
 

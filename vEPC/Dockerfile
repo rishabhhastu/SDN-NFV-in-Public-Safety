@@ -12,7 +12,10 @@ RUN apt-get update -y && \
 	sysctl -w net.ipv6.conf.all.disable_ipv6=0 && \
 	apt-get install nextepc -y
 
-COPY ./hss.conf /etc/nextepc/
+CMD ["mongodb"]
+
+COPY ./nextepc_config/ /etc/nextepc/
 
 ENTRYPOINT ["/sbin/init"]
 
+EXPOSE 27017
