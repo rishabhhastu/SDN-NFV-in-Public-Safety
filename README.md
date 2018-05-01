@@ -61,7 +61,7 @@ sudo chmod +x pymongo.sh
 ./pymongo.sh &
 ```
 
-Add / Update a record in the mongoDB using the WebGUI. Verify the update in the remote central DB. 
+Add / Update a record in the mongoDB using the WebGUI. Verify the update in the remote central DB automatically. 
 
 
 
