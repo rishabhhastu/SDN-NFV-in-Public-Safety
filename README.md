@@ -1,6 +1,6 @@
 # SDN-NFV-in-Public-Safety
 
-## Additional work appriciated for HSS syncronization. HSS synchronization would not work in these containers, but would be achievable if the mongoDB is updated to version 3.6.4 in the nextepc-vepc container.
+## Additional work appreciated for HSS syncronization. HSS synchronization would not work in these containers, but would be achievable if the mongoDB is updated to version 3.6.4 in the nextepc-vepc container.
 
 ### Description:
 
